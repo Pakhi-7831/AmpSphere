@@ -1,19 +1,10 @@
-# test_models.py
-# ==============
-# Test the trained ML models
-
 import pandas as pd
 import numpy as np
 import joblib
 from datetime import datetime
 
-print("🧪 Testing Trained Models")
+print("Testing Trained Models")
 print("=" * 30)
-
-# ============================================================================
-# Load trained models
-# ============================================================================
-
 try:
     soc_model = joblib.load('models/soc_model.pkl')
     soh_model = joblib.load('models/soh_model.pkl')
@@ -21,27 +12,19 @@ try:
     alert_model = joblib.load('models/alert_model.pkl')
     scaler = joblib.load('models/scaler.pkl')
     
-    print("✅ All models loaded successfully!")
+    print("All models loaded successfully!")
     
 except FileNotFoundError as e:
-    print(f"❌ Model file not found: {e}")
-    print("🔧 Make sure you ran train_battery_models.py first")
+    print(f" Model file not found: {e}")
+    print(" Make sure you ran train_battery_models.py first")
     exit()
-
-# ============================================================================
-# Load processed dataset for testing
-# ============================================================================
 
 try:
     df = pd.read_csv('data/processed_dataset_with_targets.csv')
-    print(f"✅ Loaded test dataset: {len(df)} rows")
+    print(f" Loaded test dataset: {len(df)} rows")
 except FileNotFoundError:
-    print("❌ Processed dataset not found")
+    print(" Processed dataset not found")
     exit()
-
-# ============================================================================
-# Prepare test data
-# ============================================================================
 
 feature_cols = [
     'Battery_Age_Months', 'Avg_Cell_Voltage', 'Max_Cell_Voltage', 'Min_Cell_Voltage',
@@ -56,44 +39,35 @@ feature_cols = [
 test_sample = df[feature_cols].iloc[0:5]  # First 5 rows
 test_sample_scaled = scaler.transform(test_sample)
 
-print(f"🔍 Testing with {len(test_sample)} sample predictions...")
+print(f" Testing with {len(test_sample)} sample predictions...")
 
-# ============================================================================
-# Make predictions
-# ============================================================================
-
-# Predict SOC
 soc_predictions = soc_model.predict(test_sample_scaled)
-print(f"\n🔋 SOC Predictions:")
+print(f"\n SOC Predictions:")
 for i, pred in enumerate(soc_predictions):
     actual = df['SOC'].iloc[i]
     print(f"  Sample {i+1}: Predicted={pred:.1f}%, Actual={actual:.1f}%, Error={abs(pred-actual):.1f}%")
 
 # Predict SOH
 soh_predictions = soh_model.predict(test_sample_scaled)
-print(f"\n💚 SOH Predictions:")
+print(f"\n SOH Predictions:")
 for i, pred in enumerate(soh_predictions):
     actual = df['SOH'].iloc[i]
     print(f"  Sample {i+1}: Predicted={pred:.1f}%, Actual={actual:.1f}%, Error={abs(pred-actual):.1f}%")
 
 # Predict Risk
 risk_predictions = risk_model.predict(test_sample_scaled)
-print(f"\n⚠️ Risk Predictions:")
+print(f"\n Risk Predictions:")
 for i, pred in enumerate(risk_predictions):
     risk_score = df['Overall_Risk_Score'].iloc[i]
     print(f"  Sample {i+1}: Predicted={pred}, Risk Score={risk_score:.1f}")
 
 # Predict Alerts
 alert_predictions = alert_model.predict(test_sample_scaled)
-print(f"\n🚨 Alert Predictions:")
+print(f"\n Alert Predictions:")
 for i, pred in enumerate(alert_predictions):
     actual_alert = df['Alert_Status'].iloc[i]
     pred_text = "CRITICAL" if pred == 1 else "NORMAL"
     print(f"  Sample {i+1}: Predicted={pred_text}, Actual={actual_alert}")
-
-# ============================================================================
-# Create demo prediction function
-# ============================================================================
 
 def predict_single_battery(battery_data):
     """
@@ -106,24 +80,19 @@ def predict_single_battery(battery_data):
         dict: Predictions for SOC, SOH, risk, alerts
     """
     
-    # Example input validation (simplified)
     required_fields = ['Avg_Cell_Voltage', 'Pack_Current', 'Avg_Temperature', 'Battery_Age_Months']
     for field in required_fields:
         if field not in battery_data:
             raise ValueError(f"Missing required field: {field}")
     
-    # For demo, use first row's feature structure
     sample_features = test_sample.iloc[0].copy()
     
-    # Update with provided data
     for key, value in battery_data.items():
         if key in sample_features.index:
             sample_features[key] = value
     
-    # Scale features
     features_scaled = scaler.transform([sample_features.values])
     
-    # Make predictions
     soc_pred = soc_model.predict(features_scaled)[0]
     soh_pred = soh_model.predict(features_scaled)[0]
     risk_pred = risk_model.predict(features_scaled)[0]
@@ -141,14 +110,9 @@ def predict_single_battery(battery_data):
         'input_data': battery_data
     }
 
-# ============================================================================
-# Demo prediction
-# ============================================================================
-
-print(f"\n🎯 Demo Prediction:")
+print(f"\n Demo Prediction:")
 print("-" * 20)
 
-# Sample battery data
 demo_data = {
     'Avg_Cell_Voltage': 3.65,
     'Pack_Current': 45.2,
@@ -161,11 +125,11 @@ demo_data = {
 try:
     demo_result = predict_single_battery(demo_data)
     
-    print(f"📊 Input Data:")
+    print(f" Input Data:")
     for key, value in demo_data.items():
         print(f"  {key}: {value}")
     
-    print(f"\n🔮 Predictions:")
+    print(f"\n Predictions:")
     preds = demo_result['predictions']
     print(f"  SOC: {preds['SOC']}%")
     print(f"  SOH: {preds['SOH']}%")
@@ -173,16 +137,11 @@ try:
     print(f"  Alert Status: {preds['alert_status']}")
     
 except Exception as e:
-    print(f"❌ Prediction error: {e}")
+    print(f" Prediction error: {e}")
 
-# ============================================================================
-# Model statistics
-# ============================================================================
-
-print(f"\n📈 Model Statistics:")
+print(f"\n Model Statistics:")
 print("-" * 20)
 
-# Calculate average errors on test set
 soc_errors = abs(soc_predictions - df['SOC'].iloc[0:5])
 soh_errors = abs(soh_predictions - df['SOH'].iloc[0:5])
 
@@ -194,5 +153,5 @@ print(f"SOH Model:")
 print(f"  Average Error: ±{soh_errors.mean():.2f}%")
 print(f"  Max Error: ±{soh_errors.max():.2f}%")
 
-print(f"\n✅ Model testing completed!")
-print(f"🚀 Models are ready for real-time predictions!")
+print(f"\n Model testing completed!")
+print(f" Models are ready for real-time predictions!")
