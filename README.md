@@ -60,31 +60,6 @@ This application uses machine learning to analyze battery operational data and p
 
 2.  Open your browser and navigate to the URL provided by Streamlit (usually http://localhost:8501).
 
-## Project Structure
-
-jlr-battery-health-platform/
-├── dashboard/
-│   └── app.py              # Streamlit dashboard application
-├── data/
-│   ├── processed_dataset_with_targets.csv
-│   └── raw_battery_dataset_1000.csv
-├── models/
-│   ├── alert_model.pkl
-│   ├── feature_importance.csv
-│   ├── risk_model.pkl
-│   ├── scaler.pkl
-│   ├── soc_model.pkl
-│   ├── soh_model.pkl
-│   ├── training_battery_models.py
-│   └── encoders/
-│       ├── charging_state_encoder.pkl
-│       ├── location_encoder.pkl
-│       └── vehicle_model_encoder.pkl
-├── debug_ml.py
-├── generator.py
-├── installed_packages.txt
-├── requirements.txt
-└── test_models.py
 
 ## Dependencies
 
