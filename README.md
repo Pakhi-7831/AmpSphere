@@ -5,7 +5,7 @@ Welcome to the AmpSphere project! ⚡️
 This application uses machine learning to analyze battery operational data and predict its State of Health (SoH). It provides an interactive dashboard built with Streamlit to help you assess battery degradation and identify potential issues before they become critical failures.
 
 
-![AmpSphere Dashboard Overview](relative/path/to/your/image.png) 
+![AmpSphere Dashboard Overview](dashboard.png) 
 
 
 ---
