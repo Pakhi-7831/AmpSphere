@@ -36,17 +36,20 @@ This application uses machine learning to analyze battery operational data and p
 
 1.  Clone the repository:
 
-        git clone https://github.com/your-username/jlr-battery-health-platform.git
-    cd jlr-battery-health-platform
+        git clone https://github.com/your-username/AmphSphere
+
+        cd jlr-battery-health-platform
     
 
-2.  Create and activate a virtual environment:
+3.  Create and activate a virtual environment:
 
         python -m venv .venv
-    source .venv/bin/activate  # On Windows, use .venv\Scripts\activate
+        source .venv/bin/activate
+    On Windows, use
+        .venv\Scripts\activate
     
 
-3.  Install the required packages:
+5.  Install the required packages:
 
         pip install -r jlr-battery-health-platform/requirements.txt
     
