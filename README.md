@@ -29,7 +29,7 @@ This application uses machine learning to analyze battery operational data and p
 
 ### Prerequisites
 
-*   Python 3.8+
+*   Python 3.8 - 3.10.1
 *   pip
 
 ### Installation
@@ -38,12 +38,12 @@ This application uses machine learning to analyze battery operational data and p
 
         git clone https://github.com/your-username/AmpSphere
 
-        cd jlr-battery-health-platform
+        cd AmpSphere
     
 
 3.  Create and activate a virtual environment:
 
-        python -m venv .venv
+        python -3.10 -m venv .venv
         source .venv/bin/activate
     On Windows, use
 
@@ -52,14 +52,14 @@ This application uses machine learning to analyze battery operational data and p
 
 5.  Install the required packages:
 
-        pip install -r jlr-battery-health-platform/requirements.txt
+        pip install -r requirements.txt
     
 
 ### Running the Application
 
 1.  Run the Streamlit dashboard:
 
-        streamlit run jlr-battery-health-platform/dashboard/app.py
+        streamlit run dashboard/app.py
     
 
 2.  Open your browser and navigate to the URL provided by Streamlit (usually http://localhost:8501).
@@ -67,7 +67,7 @@ This application uses machine learning to analyze battery operational data and p
 
 ## Dependencies
 
-The main dependencies are listed in jlr-battery-health-platform/requirements.txt and include:
+The main dependencies are listed in requirements.txt and include:
 
 *   streamlit
 *   pandas
@@ -75,3 +75,5 @@ The main dependencies are listed in jlr-battery-health-platform/requirements.txt
 *   plotly
 *   scikit-learn
 *   joblib
+
+the versions of each of these libraries have been specified in the requirements.txt, and care should be taken that they are followed. 
