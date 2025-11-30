@@ -36,7 +36,7 @@ This application uses machine learning to analyze battery operational data and p
 
 1.  Clone the repository:
 
-        git clone https://github.com/your-username/AmphSphere
+        git clone https://github.com/your-username/AmpSphere
 
         cd jlr-battery-health-platform
     
@@ -46,6 +46,7 @@ This application uses machine learning to analyze battery operational data and p
         python -m venv .venv
         source .venv/bin/activate
     On Windows, use
+
         .venv\Scripts\activate
     
 
